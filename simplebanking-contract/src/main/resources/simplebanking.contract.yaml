@@ -1,0 +1,99 @@
+openapi: 3.0.2
+info:
+  description: Banking api with basic functionality. Based on the OpenAPI 3.0 specification.
+  version: 1.0-SNAPSHOT
+  title: SimpleBanking API
+  contact:
+    email: zimheral@gmail.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+tags:
+  - name: customer
+    description: Operations related to customer data
+  - name: account
+    description: Operations related to accounts
+
+paths:
+  '/account/open/{customerId}':
+    post:
+      tags:
+        - account
+      summary: Open an account for the customer
+      description: Open an account for the customer
+      operationId: openAccount
+      parameters:
+        - name: customerId
+          in: path
+          description: ID of the customer to modify
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Initial credit on the account
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Credit'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentAccount'
+        '400':
+          description: Invalid customerId
+        '404':
+          description: Pet not found
+  /customer:
+    get:
+      tags:
+        - customer
+      description: Returns a single customer
+      operationId: getCustomer
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Pet not found
+
+components:
+  schemas:
+    Money:
+      type: integer
+      format: int64
+      example: 10
+    Credit:
+      type: object
+      required:
+        - credit
+      properties:
+        credit:
+          $ref: '#/components/schemas/Money'
+    Customer:
+      properties:
+        name:
+          type: string
+          example: John
+        surname:
+          type: string
+          example: James
+        balance:
+          $ref: '#/components/schemas/Money'
+    CurrentAccount:
+      type: object
+      required:
+        - account
+      properties:
+        account:
+          type: string
+          example: 'AC12345'
