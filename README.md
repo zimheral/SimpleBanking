@@ -13,12 +13,12 @@ It has a basic frontend that allows the user to:
 
 ### Getting Started
 
-###Prerequisites
+#### Prerequisites
 
 - Java JDK 8
 - Maven 
 
-###Installation
+#### Installation
 
 Once you have prerequisites ready, run `mvn clean install` on the root directory
 
