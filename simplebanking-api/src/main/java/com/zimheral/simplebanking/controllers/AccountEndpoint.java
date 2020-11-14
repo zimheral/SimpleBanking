@@ -6,9 +6,11 @@ import com.zimheral.simplebanking.model.CurrentAccount;
 import com.zimheral.simplebanking.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+@RestController
 public class AccountEndpoint implements AccountApi {
 
     @Autowired

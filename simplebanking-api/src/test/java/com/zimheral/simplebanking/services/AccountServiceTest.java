@@ -1,39 +1,70 @@
 package com.zimheral.simplebanking.services;
 
+import com.zimheral.simplebanking.entities.Account;
 import com.zimheral.simplebanking.model.Credit;
+import com.zimheral.simplebanking.model.CurrentAccount;
+import com.zimheral.simplebanking.repositories.AccountRepository;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
 class AccountServiceTest {
 
-    private final AccountService accountService = new AccountService();
+    @Mock
+    private AccountRepository accountRepository;
+
+    @InjectMocks
+    private AccountService accountService;
 
     @Test
-    void shouldProcessOpenAccountWithCreditMoreThan0() {
-        Credit credit = new Credit();
-        credit.setCredit(100L);
-
+    void shouldReturnPersistedAccountOnProcessOpenAccount() {
+        //GIVEN
+        Credit credit = new Credit().credit(100L);
         long customerId = 12345L;
-        accountService.processOpenAccount(customerId, credit);
+        String currentAccountIban = "BE12345";
+        Optional<Account> account = Optional.of(new Account(customerId, currentAccountIban));
+        when(accountRepository.findByCustomerId(customerId)).thenReturn(account);
+
+        //WHEN
+        CurrentAccount currentAccount = accountService.processOpenAccount(customerId, credit);
+
+        //THEN
+        assertNotNull(currentAccount.getAccount());
+        assertEquals(currentAccountIban, currentAccount.getAccount());
     }
 
     @Test
-    void shouldProcessOpenAccountWithCredit0() {
-        Credit credit = new Credit();
-        credit.setCredit(0L);
+    void shouldGenerateAccountOnProcessOpenAccount() {
 
+        //GIVEN
+        Credit credit = new Credit().credit(0L);
         long customerId = 12345L;
-        accountService.processOpenAccount(customerId, credit);
+        when(accountRepository.findByCustomerId(customerId)).thenReturn(Optional.empty());
+
+        //WHEN
+        CurrentAccount currentAccount = accountService.processOpenAccount(customerId, credit);
+
+        //THEN
+        assertNotNull(currentAccount.getAccount());
     }
 
     @Test
     void shouldThrowExceptionWhenProcessOpenAccountWithCreditNull() {
 
+        //GIVEN
         long customerId = 12345L;
+
+        //THEN
         HttpClientErrorException exception = assertThrows(HttpClientErrorException.class,
                 () -> accountService.processOpenAccount(customerId, null));
 
@@ -43,9 +74,12 @@ class AccountServiceTest {
     @Test
     void shouldThrowExceptionWhenProcessOpenAccountWithCreditNegative() {
 
+        //GIVEN
         Credit credit = new Credit();
         credit.setCredit(-10L);
         long customerId = 12345L;
+
+        //THEN
         HttpClientErrorException exception = assertThrows(HttpClientErrorException.class,
                 () -> accountService.processOpenAccount(customerId, credit));
 
