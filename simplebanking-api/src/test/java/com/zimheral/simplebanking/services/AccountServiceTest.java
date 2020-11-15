@@ -59,19 +59,6 @@ class AccountServiceTest {
     }
 
     @Test
-    void shouldThrowExceptionWhenProcessOpenAccountWithCreditNull() {
-
-        //GIVEN
-        long customerId = 12345L;
-
-        //THEN
-        HttpClientErrorException exception = assertThrows(HttpClientErrorException.class,
-                () -> accountService.processOpenAccount(customerId, null));
-
-        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
-    }
-
-    @Test
     void shouldThrowExceptionWhenProcessOpenAccountWithCreditNegative() {
 
         //GIVEN
