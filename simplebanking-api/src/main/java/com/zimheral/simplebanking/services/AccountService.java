@@ -28,7 +28,7 @@ public class AccountService {
 
     public CurrentAccount processOpenAccount(final Long customerId, final Credit credit) {
 
-        if (Objects.isNull(credit) || credit.getCredit().compareTo(BigDecimal.ZERO) < 0) {
+        if (credit.getCredit().compareTo(BigDecimal.ZERO) < 0) {
             throw new HttpClientErrorException(HttpStatus.BAD_REQUEST);
         }
 
