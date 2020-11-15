@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,7 +30,7 @@ class AccountServiceTest {
     @Test
     void shouldReturnPersistedAccountOnProcessOpenAccount() {
         //GIVEN
-        Credit credit = new Credit().credit(100L);
+        Credit credit = new Credit().credit(BigDecimal.valueOf(100));
         long customerId = 12345L;
         String currentAccountIban = "BE12345";
         Optional<Account> account = Optional.of(new Account(customerId, currentAccountIban));
@@ -47,7 +48,7 @@ class AccountServiceTest {
     void shouldGenerateAccountOnProcessOpenAccount() {
 
         //GIVEN
-        Credit credit = new Credit().credit(0L);
+        Credit credit = new Credit().credit(BigDecimal.ZERO);
         long customerId = 12345L;
         when(accountRepository.findByCustomerId(customerId)).thenReturn(Optional.empty());
 
@@ -76,7 +77,7 @@ class AccountServiceTest {
 
         //GIVEN
         Credit credit = new Credit();
-        credit.setCredit(-10L);
+        credit.setCredit(BigDecimal.valueOf(-10));
         long customerId = 12345L;
 
         //THEN

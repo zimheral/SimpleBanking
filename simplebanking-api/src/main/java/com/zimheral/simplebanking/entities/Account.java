@@ -1,43 +1,27 @@
 package com.zimheral.simplebanking.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.Data;
+import lombok.NonNull;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
+@Data
 public class Account {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "seq_account", sequenceName = "seq_account")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_account")
     private Long id;
+
+    @NonNull
     private Long customerId;
+
+    @NonNull
     private String currentAccount;
 
-    protected Account() {
-    }
+    @OneToMany(mappedBy = "account")
+    private List<Transaction> transactions;
 
-    public Account(Long customerId, String currentAccount) {
-        this.customerId = customerId;
-        this.currentAccount = currentAccount;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public Long getCustomerId() {
-        return customerId;
-    }
-
-    public String getCurrentAccount() {
-        return currentAccount;
-    }
-
-    @Override
-    public String toString() {
-        return String.format(
-                "Account[id=%d, customerId='%s', currentAccount='%s']",
-                id, customerId, currentAccount);
-    }
 }
