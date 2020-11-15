@@ -32,8 +32,8 @@ class TransactionServiceTest {
     void processTransaction() {
         //GIVEN
         BigDecimal amount = BigDecimal.TEN;
-        Account account = new Account(1L,null);
-        Transaction transaction = new Transaction(amount, account);
+        Account account = Account.builder().customerId(1L).currentAccount("BE12345").build();
+        Transaction transaction = Transaction.builder().amount(amount).account(account).build();
         when(transactionRepository.save(any(Transaction.class))).thenReturn(transaction);
 
         //WHEN

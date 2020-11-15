@@ -17,7 +17,7 @@ public class TransactionService {
     private final TransactionRepository transactionRepository;
 
     public void processTransaction(final BigDecimal amount, final Account account) {
-        Transaction transaction = new Transaction(amount, account);
+        Transaction transaction = Transaction.builder().amount(amount).account(account).build();
         Transaction savedTransaction = transactionRepository.save(transaction);
         log.info("Registered transactionId: {}, amount: {}, customerId: {} ",
                 savedTransaction.getId(), savedTransaction.getAmount(), savedTransaction.getAccount().getCustomerId());

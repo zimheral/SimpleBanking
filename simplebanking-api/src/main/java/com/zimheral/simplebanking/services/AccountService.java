@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -29,7 +29,7 @@ public class AccountService {
     public CurrentAccount processOpenAccount(final Long customerId, final Credit credit) {
 
         if (credit.getCredit().compareTo(BigDecimal.ZERO) < 0) {
-            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Credit for account opening cannot be negative");
         }
 
         val currentAccount = new CurrentAccount();
@@ -40,14 +40,14 @@ public class AccountService {
             currentAccount.setAccount(accountFromDb.get().getCurrentAccount());
             log.info("CustomerId: {},  Retrieved account from DB: {} ", customerId, currentAccount.getAccount());
 
-        //CASE 2: Generate new account
+            //CASE 2: Generate new account
         } else {
             //Generate account
             currentAccount.setAccount(generateBeAccount());
             log.info("CustomerId: {},  Generated account: {} ", customerId, currentAccount.getAccount());
 
             //Save account to DB
-            Account account = new Account(customerId, currentAccount.getAccount());
+            Account account = Account.builder().customerId(customerId).currentAccount(currentAccount.getAccount()).build();
             Account savedAccount = repository.save(account);
 
             if (credit.getCredit().compareTo(BigDecimal.ZERO) > 0) {

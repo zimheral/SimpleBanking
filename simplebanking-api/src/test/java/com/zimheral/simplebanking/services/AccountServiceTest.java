@@ -10,7 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -33,7 +33,7 @@ class AccountServiceTest {
         Credit credit = new Credit().credit(BigDecimal.valueOf(100));
         long customerId = 12345L;
         String currentAccountIban = "BE12345";
-        Optional<Account> account = Optional.of(new Account(customerId, currentAccountIban));
+        Optional<Account> account = Optional.of(Account.builder().customerId(customerId).currentAccount(currentAccountIban).build());
         when(accountRepository.findByCustomerId(customerId)).thenReturn(account);
 
         //WHEN
@@ -68,9 +68,9 @@ class AccountServiceTest {
         long customerId = 12345L;
 
         //THEN
-        HttpClientErrorException exception = assertThrows(HttpClientErrorException.class,
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class,
                 () -> accountService.processOpenAccount(customerId, credit));
 
-        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 }

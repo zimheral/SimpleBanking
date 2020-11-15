@@ -1,7 +1,6 @@
 package com.zimheral.simplebanking.entities;
 
-import lombok.Data;
-import lombok.NonNull;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +11,12 @@ import javax.persistence.Id;
 import java.util.List;
 
 @Entity
-@Data
+@Builder
+@Getter
+@ToString
+@EqualsAndHashCode
+@AllArgsConstructor
+@NoArgsConstructor
 public class Account {
 
     @Id

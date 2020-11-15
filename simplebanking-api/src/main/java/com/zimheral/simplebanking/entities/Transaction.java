@@ -1,13 +1,17 @@
 package com.zimheral.simplebanking.entities;
 
-import lombok.Data;
-import lombok.NonNull;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Data
+@Builder
+@Getter
+@ToString
+@EqualsAndHashCode
+@AllArgsConstructor
+@NoArgsConstructor
 public class Transaction {
 
     @Id
