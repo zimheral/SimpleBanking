@@ -1,6 +1,7 @@
 package com.zimheral.simplebanking.services;
 
 import com.zimheral.simplebanking.entities.Account;
+import com.zimheral.simplebanking.entities.Customer;
 import com.zimheral.simplebanking.entities.Transaction;
 import com.zimheral.simplebanking.repositories.TransactionRepository;
 import org.junit.jupiter.api.Assertions;
@@ -32,19 +33,20 @@ class TransactionServiceTest {
     void processTransaction() {
         //GIVEN
         BigDecimal amount = BigDecimal.TEN;
-        Account account = Account.builder().customerId(1L).currentAccount("BE12345").build();
+        Customer customer = mock(Customer.class);
+        Account account = Account.builder()
+                .iban("BE12345").customer(customer).balance(amount).accountType(com.zimheral.simplebanking.model.Account.AccountTypeEnum.CURRENT_ACCOUNT)
+                .build();
         Transaction transaction = Transaction.builder().amount(amount).account(account).build();
-        when(transactionRepository.save(any(Transaction.class))).thenReturn(transaction);
+        when(transactionRepository.saveAndFlush(any(Transaction.class))).thenReturn(transaction);
 
         //WHEN
-        transactionService.processTransaction(amount,account);
+        transactionService.processTransaction(amount, account);
 
         //THEN
-        verify(transactionRepository).save(transactionCaptor.capture());
+        verify(transactionRepository).saveAndFlush(transactionCaptor.capture());
         Transaction capturedVal = transactionCaptor.getValue();
         Assertions.assertEquals(transaction.getAmount(), capturedVal.getAmount());
-        Assertions.assertEquals(transaction.getAccount().getCurrentAccount(), capturedVal.getAccount().getCurrentAccount());
-        Assertions.assertEquals(transaction.getAccount().getCustomerId(), capturedVal.getAccount().getCustomerId());
-
+        Assertions.assertEquals(transaction.getAccount().getIban(), capturedVal.getAccount().getIban());
     }
 }

@@ -16,10 +16,11 @@ public class TransactionService {
 
     private final TransactionRepository transactionRepository;
 
-    public void processTransaction(final BigDecimal amount, final Account account) {
+    public Transaction processTransaction(final BigDecimal amount, final Account account) {
         Transaction transaction = Transaction.builder().amount(amount).account(account).build();
-        Transaction savedTransaction = transactionRepository.save(transaction);
+        Transaction savedTransaction = transactionRepository.saveAndFlush(transaction);
         log.info("Registered transactionId: {}, amount: {}, customerId: {} ",
-                savedTransaction.getId(), savedTransaction.getAmount(), savedTransaction.getAccount().getCustomerId());
+                savedTransaction.getId(), savedTransaction.getAmount(), account.getCustomer().getId());
+        return savedTransaction;
     }
 }

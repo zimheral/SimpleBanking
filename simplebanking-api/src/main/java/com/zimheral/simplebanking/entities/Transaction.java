@@ -10,8 +10,8 @@ import java.math.BigDecimal;
 @Getter
 @ToString
 @EqualsAndHashCode
-@AllArgsConstructor
-@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Transaction {
 
     @Id
@@ -22,7 +22,7 @@ public class Transaction {
     @NonNull
     private BigDecimal amount;
 
-    @NonNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id")
     private Account account;
 }
