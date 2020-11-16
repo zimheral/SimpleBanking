@@ -3,7 +3,6 @@ package com.zimheral.simplebanking.entities;
 import lombok.*;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 
 @Entity
 @Builder
@@ -12,18 +11,18 @@ import java.math.BigDecimal;
 @EqualsAndHashCode
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class Transaction {
+public class Customer {
 
     @Id
-    @SequenceGenerator(name = "seq_transaction", sequenceName = "seq_transaction")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_transaction")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NonNull
-    private BigDecimal amount;
+    private String name;
 
     @NonNull
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "account_id")
+    private String surname;
+
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "customer")
     private Account account;
 }

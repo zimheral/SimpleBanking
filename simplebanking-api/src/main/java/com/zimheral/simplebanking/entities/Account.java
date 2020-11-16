@@ -1,22 +1,19 @@
 package com.zimheral.simplebanking.entities;
 
+import com.zimheral.simplebanking.model.Account.AccountTypeEnum;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.OneToMany;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
-@Builder
+@Builder(toBuilder = true)
 @Getter
 @ToString
 @EqualsAndHashCode
-@AllArgsConstructor
-@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Account {
 
     @Id
@@ -25,12 +22,21 @@ public class Account {
     private Long id;
 
     @NonNull
-    private Long customerId;
+    private String iban;
 
     @NonNull
-    private String currentAccount;
+    private BigDecimal balance;
+
+    @NonNull
+    @Enumerated(EnumType.STRING)
+    private AccountTypeEnum accountType;
 
     @OneToMany(mappedBy = "account")
     private List<Transaction> transactions;
+
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToOne
+    private Customer customer;
 
 }
