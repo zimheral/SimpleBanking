@@ -22,6 +22,7 @@
     <modules>
         <module>simplebanking-contract</module>
         <module>simplebanking-api</module>
+        <module>simplebanking-web</module>
     </modules>
 
     <dependencies>
