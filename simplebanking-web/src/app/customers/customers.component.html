@@ -1,4 +1,4 @@
-<div class="card my-5">
+<div *ngIf="!error else showError" class="card my-5">
     <div class="card-body">
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">
@@ -14,10 +14,10 @@
                         <a routerLink="/info/{{customer.id}}">
                             <button type="button" class="btn btn-info">Show details</button>
                         </a>
-                        
+
                     </td>
                     <td class="text-center">
-                        
+
                         <a routerLink="/account/open/{{customer.id}}">
                             <button type="button" class="btn btn-success">Open account</button>
                         </a>
@@ -27,3 +27,12 @@
         </table>
     </div>
 </div>
+
+
+<ng-template #showError>
+    <div class="alert alert-danger" role="alert">
+        There was an error with the request: 
+        <p class="h3">{{error.message}} </p>
+        (Backend service not running?)
+    </div>
+</ng-template>
