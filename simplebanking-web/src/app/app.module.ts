@@ -8,17 +8,21 @@ import { HttpClientModule } from '@angular/common/http';
 
 import {CustomerService} from './customer.service';
 import { CustomerInfoComponent } from './customer-info/customer-info.component';
+import { OpenAccountComponent } from './open-account/open-account.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     CustomersComponent,
-    CustomerInfoComponent
+    CustomerInfoComponent,
+    OpenAccountComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [CustomerService],
   bootstrap: [AppComponent]

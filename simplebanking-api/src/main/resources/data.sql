@@ -1,1 +1,11 @@
 INSERT INTO customer (name, surname) VALUES ('John', 'Doe');
+insert into customer (name, surname) values ('Faber', 'Roddick');
+insert into customer (name, surname) values ('Woodrow', 'Kitney');
+insert into customer (name, surname) values ('Renaldo', 'Ren');
+insert into customer (name, surname) values ('Arluene', 'Tattoo');
+insert into customer (name, surname) values ('Mechelle', 'Butner');
+insert into customer (name, surname) values ('Audry', 'Allaway');
+insert into customer (name, surname) values ('Jodie', 'Iannazzi');
+insert into customer (name, surname) values ('Maighdiln', 'Koomar');
+insert into customer (name, surname) values ('Anneliese', 'Camidge');
+insert into customer (name, surname) values ('Saree', 'Dollard');
