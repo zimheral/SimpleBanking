@@ -1,0 +1,65 @@
+<table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col" colspan="2" class="text-center">User Details</th>
+        </tr>
+    </thead>
+    <thead>
+        <tr>
+            <th scope="col" class="text-center">Name</th>
+            <th scope="col" class="text-center">Surname</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="text-center">{{customerInfo.name}}</td>
+            <td class="text-center">{{customerInfo.surname}}</td>
+        </tr>
+    </tbody>
+
+</table>
+<table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col" colspan="3" class="text-center">Account</th>
+        </tr>
+    </thead>
+    <thead>
+        <tr>
+            <th scope="col" class="text-center">IBAN</th>
+            <th scope="col" class="text-center">Balance</th>
+            <th scope="col" class="text-center">Account Type</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="text-center">{{customerInfo.account.iban}}</td>
+            <td class="text-center">{{customerInfo.account.balance}}</td>
+            <td class="text-center">{{customerInfo.account.accountType}}</td>
+
+        </tr>
+    </tbody>
+
+</table>
+<table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col" colspan="2" class="text-center">Transactions</th>
+        </tr>
+    </thead>
+
+    <thead>
+        <tr>
+            <th scope="col" class="text-center">ID</th>
+            <th scope="col" class="text-center">Amount</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let transaction of customerInfo.account.transactions" >
+            <td class="text-center">{{transaction.id}}</td>
+            <td class="text-center">{{transaction.amount}}</td>
+        </tr>
+    </tbody>
+
+</table>
