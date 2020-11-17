@@ -1,0 +1,29 @@
+<div class="card my-5">
+    <div class="card-body">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col" class="text-center">#</th>
+                    <th scope="col" class="text-center" colspan="2">Operations</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let customer of customers">
+                    <td class="text-center">{{ customer.id }}</td>
+                    <td class="text-center">
+                        <a routerLink="/info/{{customer.id}}">
+                            <button type="button" class="btn btn-primary">Get Info</button>
+                        </a>
+                        
+                    </td>
+                    <td class="text-center">
+                        
+                        <a routerLink="/account/{{customer.id}}">
+                            <button type="button" class="btn btn-primary">Get Acount</button>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
