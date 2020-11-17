@@ -13,7 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -92,5 +92,19 @@ class CustomerServiceTest {
         assertEquals(customer.getSurname(), response.getSurname());
         assertEquals(response.getAccount().getIban(), response.getAccount().getIban());
         assertEquals(response.getAccount().getIban(), response.getAccount().getIban());
+    }
+
+    @Test
+    void shouldGetCustomers() {
+        //GIVEN
+        Customer customer = Customer.builder().id(1L).name("John").surname("Doe").build();
+        List<Customer> list = Collections.singletonList(customer);
+        when(customerRepository.findAll()).thenReturn(list);
+
+        //WHEN
+        val response = customerService.getCustomers();
+
+        //THEN
+        assertEquals(customer.getId(), response.get(0).getId());
     }
 }
