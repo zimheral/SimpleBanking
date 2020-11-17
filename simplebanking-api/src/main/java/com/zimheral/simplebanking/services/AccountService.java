@@ -13,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -27,8 +28,8 @@ public class AccountService {
     public Account processOpenAccount(final Long customerId, final Credit credit) {
         val customer = customerService.getCustomer(customerId);
         BigDecimal creditAmount = credit.getCredit();
-        if (creditAmount.compareTo(BigDecimal.ZERO) < 0) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Credit for account opening cannot be negative");
+        if (Objects.nonNull(creditAmount) && creditAmount.compareTo(BigDecimal.ZERO) < 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Credit for account opening cannot be null or negative");
         }
 
         val account = new Account();

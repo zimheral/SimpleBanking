@@ -1,0 +1,19 @@
+<div *ngIf="!customerInfo.account else showAccount">
+    <form #accountForm="ngForm">
+        <div class="form-group">
+          <label for="credit">Initial Credit</label>
+          <input id="credit" name="credit" type="number" ngModel #credit required min="0" class="form-control" placeholder="Enter your initial credit">
+
+          <div *ngIf="accountForm.invalid" class="alert alert-danger"> Please enter a value higher than 0 </div>
+
+        </div>
+        <button (click)="process(credit.value)" [disabled]="!accountForm.valid" class="btn btn-primary">Open Account</button>
+      </form>
+   </div>
+   
+   <ng-template #showAccount>
+    <div class="alert alert-success" role="alert">
+        Congratulations! Your new account is: {{customerInfo.account.iban}}
+      </div>
+   </ng-template>
+

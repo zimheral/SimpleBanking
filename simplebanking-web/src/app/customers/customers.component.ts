@@ -17,5 +17,4 @@ export class CustomersComponent implements OnInit {
     this.customerService.getCustomers()
       .subscribe(customers => this.customers = customers);
   }
-
 }
