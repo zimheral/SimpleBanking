@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import {Account} from './customer-info';
-import {Credit} from './credit';
 import { catchError } from 'rxjs/operators';
 
 
