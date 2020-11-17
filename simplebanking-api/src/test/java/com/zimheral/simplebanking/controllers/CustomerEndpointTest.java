@@ -47,7 +47,6 @@ class CustomerEndpointTest {
         long customerId = 1L;
         val customer = mock(Customer.class);
         val customerData = mock(CustomerData.class);
-
         when(customerService.getCustomer(customerId)).thenReturn(customer);
         when(customerService.getData(customer)).thenReturn(customerData);
 
