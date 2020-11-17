@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import {Customer} from './customer';
 import { catchError } from 'rxjs/operators';
+import {CustomerInfo} from './customer-info'
 
 
 
@@ -23,8 +24,18 @@ export class CustomerService {
       );
   }
 
+  getCustomerInfo(id:number): Observable<CustomerInfo> {
+    const url = `${this.customersUrl}/${id}/info`;
+    console.info(`url constructed: ${url}`)
+    return this.http.get<CustomerInfo>(url)
+      .pipe(
+        catchError(this.handleError<CustomerInfo>(`getCustomersInfo id=${id}`))
+      );
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
+      console.error("error ocurred: ");
       console.error(error);
       return of(result as T);
     };
