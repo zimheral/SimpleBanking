@@ -1,27 +1,16 @@
 # SimplebankingWeb
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.2.0.
+This is the web module for the SimpleBanking application
+The basic structure was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.2.0.
 
-## Development server
+## Initialize the application
+Run `ng serve` for running the application on the server. 
+Then navigate to `http://localhost:4200/` and you can start testing!
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+### Views
 
-## Code scaffolding
+- The app has a single view that gets updated depending on the user interaction:
+   1. Initially you have access to the `Show Customers` button which allows you retrieve the customers test data from the in memory db.
+   2. With each of the customers you can click on `Open account` which will take you to a page where you can create an account with an initial credit.
+   3. You have another option of clicking on `Show details` where you will have an overview of the client data.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.

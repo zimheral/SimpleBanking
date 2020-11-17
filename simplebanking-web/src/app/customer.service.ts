@@ -18,10 +18,7 @@ export class CustomerService {
   constructor(private http: HttpClient) { }
 
   getCustomers(): Observable<Customer[]> {
-    return this.http.get<Customer[]>(this.customersUrl)
-      .pipe(
-        catchError(this.handleError<Customer[]>('getCustomers', []))
-      );
+    return this.http.get<Customer[]>(this.customersUrl);
   }
 
   getCustomerInfo(id:number): Observable<CustomerInfo> {
