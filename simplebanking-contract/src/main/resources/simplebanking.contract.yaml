@@ -9,7 +9,7 @@ info:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
 tags:
-  - name: customer
+  - name: customers
     description: Operations related to customer data
   - name: account
     description: Operations related to accounts
@@ -42,10 +42,27 @@ paths:
           description: Invalid data provided
         '404':
           description: Customer not found
-  /customer/{customerId}/info:
+
+  /customers:
     get:
       tags:
-        - customer
+        - customers
+      description: Returns all customers in the database
+      operationId: getCustomers
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Customer'
+
+  /customers/{customerId}/info:
+    get:
+      tags:
+        - customers
       description: Returns customer information including transactions
       operationId: getCustomerData
       parameters:
@@ -119,6 +136,14 @@ components:
           format: int64
         amount:
           $ref: '#/components/schemas/Money'
+    Customer:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: integer
+          format: int64
 
   parameters:
     customerId:

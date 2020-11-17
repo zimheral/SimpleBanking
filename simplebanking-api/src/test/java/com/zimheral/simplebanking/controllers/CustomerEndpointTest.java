@@ -11,6 +11,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 
+import java.util.Collections;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
@@ -23,6 +26,20 @@ class CustomerEndpointTest {
     private CustomerService customerService;
     @InjectMocks
     private CustomerEndpoint customerEndpoint;
+
+    @Test
+    void shouldGetCustomers() {
+        //GIVEN
+        com.zimheral.simplebanking.model.Customer customer = mock(com.zimheral.simplebanking.model.Customer.class);
+        when(customerService.getCustomers()).thenReturn(Collections.singletonList(customer));
+
+        //WHEN
+        ResponseEntity<List<com.zimheral.simplebanking.model.Customer>> response = customerEndpoint.getCustomers();
+
+        //THEN
+        assertNotNull(response.getBody());
+        assertEquals(customer, response.getBody().get(0));
+    }
 
     @Test
     void shouldGetCustomerData() {

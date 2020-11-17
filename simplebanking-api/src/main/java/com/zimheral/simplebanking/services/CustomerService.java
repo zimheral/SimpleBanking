@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,6 +26,12 @@ public class CustomerService {
     public Customer getCustomer(long customerId) {
         return customerRepository.findById(customerId).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "The provided customerId was not found in the database"));
+    }
+
+    public List<com.zimheral.simplebanking.model.Customer> getCustomers() {
+        List<com.zimheral.simplebanking.model.Customer> customers = new ArrayList<>();
+        customerRepository.findAll().forEach(customer -> customers.add(new com.zimheral.simplebanking.model.Customer().id(customer.getId())));
+        return customers;
     }
 
     public CustomerData getData(Customer customer) {
